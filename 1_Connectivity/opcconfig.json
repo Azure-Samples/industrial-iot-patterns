@@ -1,0 +1,47 @@
+[
+    {
+        "EndpointUrl": "opc.tcp://10.0.0.4:49320",
+        "UseSecurity": true,
+        "OpcAuthenticationMode": "UsernamePassword",
+        "OpcAuthenticationUsername": "",
+        "OpcAuthenticationPassword": "",
+        "OpcNodes": [
+            {
+                "Id": "ns=2;s=Simulator.Line1.Humidity"
+            },
+            {
+                "Id": "ns=2;s=Simulator.Line1.Temperature"
+            },
+            {
+                "Id": "ns=2;s=Simulator.Line1.Speed"
+            },
+            {
+                "Id": "ns=2;s=Simulator.Line2.Humidity"
+            },
+            {
+                "Id": "ns=2;s=Simulator.Line2.Temperature"
+            },
+            {
+                "Id": "ns=2;s=Simulator.Line2.Speed"
+            },
+            {
+                "Id": "ns=2;s=Simulator.Line3.Humidity"
+            },
+            {
+                "Id": "ns=2;s=Simulator.Line3.Temperature"
+            },
+            {
+                "Id": "ns=2;s=Simulator.Line3.Speed"
+            },
+            {
+                "Id": "ns=2;s=Simulator.Line4.Humidity"
+            },
+            {
+                "Id": "ns=2;s=Simulator.Line4.Temperature"
+            },
+            {
+                "Id": "ns=2;s=Simulator.Line4.Speed"
+            }
+        ]
+    }
+]

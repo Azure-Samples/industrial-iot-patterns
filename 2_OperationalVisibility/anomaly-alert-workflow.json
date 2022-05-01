@@ -1,0 +1,232 @@
+{
+    "definition": {
+        "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+        "actions": {
+            "Create_HTML_table": {
+                "inputs": {
+                    "columns": [
+                        {
+                            "header": "metricGuid",
+                            "value": "@item()?['metricId']"
+                        },
+                        {
+                            "header": "timestamp",
+                            "value": "@item()?['startTime']"
+                        },
+                        {
+                            "header": "dimension",
+                            "value": "@item()?['rootNode']?['dimension']"
+                        },
+                        {
+                            "header": "property",
+                            "value": "@item()?['property']"
+                        }
+                    ],
+                    "format": "HTML",
+                    "from": "@body('Parse_JSON')?['value']"
+                },
+                "runAfter": {
+                    "Parse_JSON": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "Table"
+            },
+            "HTTP": {
+                "inputs": {
+                    "headers": {
+                        "Ocp-Apim-Subscription-Key": "",
+                        "x-api-key": ""
+                    },
+                    "method": "GET",
+                    "uri": "@{triggerBody()?['value'][0]['callBackUrl']}"
+                },
+                "runAfter": {},
+                "type": "Http"
+            },
+            "Parse_JSON": {
+                "inputs": {
+                    "content": "@body('HTTP')",
+                    "schema": {
+                        "properties": {
+                            "value": {
+                                "items": {
+                                    "properties": {
+                                        "anomalyDetectionConfigurationId": {
+                                            "type": "string"
+                                        },
+                                        "dataFeedId": {
+                                            "type": "string"
+                                        },
+                                        "incidentId": {
+                                            "type": "string"
+                                        },
+                                        "lastTime": {
+                                            "type": "string"
+                                        },
+                                        "metricId": {
+                                            "type": "string"
+                                        },
+                                        "property": {
+                                            "properties": {
+                                                "expectedValueOfRootNode": {
+                                                    "type": "integer"
+                                                },
+                                                "incidentStatus": {
+                                                    "type": "string"
+                                                },
+                                                "maxSeverity": {
+                                                    "type": "string"
+                                                },
+                                                "valueOfRootNode": {
+                                                    "type": "number"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "rootNode": {
+                                            "properties": {
+                                                "dimension": {
+                                                    "properties": {
+                                                        "Capability": {
+                                                            "type": "string"
+                                                        },
+                                                        "Device": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "startTime": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "dataFeedId",
+                                        "metricId",
+                                        "anomalyDetectionConfigurationId",
+                                        "incidentId",
+                                        "startTime",
+                                        "lastTime",
+                                        "rootNode",
+                                        "property"
+                                    ],
+                                    "type": "object"
+                                },
+                                "type": "array"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "runAfter": {
+                    "HTTP": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "ParseJson"
+            },
+            "Send_an_email_(V2)": {
+                "inputs": {
+                    "body": {
+                        "Body": "<p>@{body('Create_HTML_table')}</p>",
+                        "Subject": "Anomaly Alert",
+                        "To": ""
+                    },
+                    "host": {
+                        "connection": {
+                            "name": "@parameters('$connections')['office365']['connectionId']"
+                        }
+                    },
+                    "method": "post",
+                    "path": "/v2/Mail"
+                },
+                "runAfter": {
+                    "Create_HTML_table": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "ApiConnection"
+            }
+        },
+        "contentVersion": "1.0.0.0",
+        "outputs": {},
+        "parameters": {
+            "$connections": {
+                "defaultValue": {},
+                "type": "Object"
+            }
+        },
+        "triggers": {
+            "manual": {
+                "inputs": {
+                    "method": "POST",
+                    "schema": {
+                        "properties": {
+                            "value": {
+                                "items": {
+                                    "properties": {
+                                        "alertInfo": {
+                                            "properties": {
+                                                "alertId": {
+                                                    "type": "string"
+                                                },
+                                                "anomalyAlertingConfigurationId": {
+                                                    "type": "string"
+                                                },
+                                                "createdTime": {
+                                                    "type": "string"
+                                                },
+                                                "modifiedTime": {
+                                                    "type": "string"
+                                                },
+                                                "timestamp": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "alertType": {
+                                            "type": "string"
+                                        },
+                                        "callBackUrl": {
+                                            "type": "string"
+                                        },
+                                        "hookId": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "hookId",
+                                        "alertType",
+                                        "alertInfo",
+                                        "callBackUrl"
+                                    ],
+                                    "type": "object"
+                                },
+                                "type": "array"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "kind": "Http",
+                "type": "Request"
+            }
+        }
+    },
+    "parameters": {
+        "$connections": {
+            "value": {
+                "office365": {
+                    "connectionId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/iiotsample/providers/Microsoft.Web/connections/office365",
+                    "connectionName": "office365",
+                    "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Web/locations/westus2/managedApis/office365"
+                }
+            }
+        }
+    }
+}

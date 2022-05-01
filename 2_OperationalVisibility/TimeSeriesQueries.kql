@@ -1,0 +1,55 @@
+// Plot Temperature Sensor for Line 1 with Seasonal, Trend, and Residual components.
+// Last 1 hour with 1 minute aggregates
+let _startTime = now()-1hr;
+let _endTime = now();
+let stepAggregate = 1m;
+let temptags = telemetry
+| distinct ExpandedNodeId
+| where ExpandedNodeId contains ("Temperature")
+| project ExpandedNodeId;
+telemetry
+| where ExpandedNodeId in (temptags) and ExpandedNodeId contains "Line1"
+| project SourceTimestamp, Tag = replace_string(ExpandedNodeId,"nsu=KEPServerEX;s=Simulator.Line1",""), yaxis = toint(Value)
+| make-series num=avg(yaxis) default=0 on SourceTimestamp  from _startTime to _endTime step stepAggregate by Tag
+| extend (baseline, seasonal, trend, residual) = series_decompose(num, -1, 'linefit') 
+| project Baseline = baseline, Seasonal = seasonal, Trend = trend, Average=num, SourceTimestamp
+| render timechart with(title='Temperature decomposition with 1 minute granularity', ysplit=panels)
+
+
+// Plot Anomalies for Humidity Sensor on Line 1
+let _startTime = now()-1hr;
+let _endTime = now();
+let stepAggregate = 1m;
+let temptags = telemetry
+| distinct ExpandedNodeId
+| where ExpandedNodeId contains ("Humidity")
+| project ExpandedNodeId;
+telemetry
+| where ExpandedNodeId in (temptags) and ExpandedNodeId contains "Line1"
+| project SourceTimestamp, Tag = replace_string(ExpandedNodeId,"nsu=KEPServerEX;s=Simulator.Line1",""), yaxis = todouble(Value)
+| make-series num=avg(yaxis) default=0 on SourceTimestamp  from _startTime to _endTime step stepAggregate by Tag
+| extend series_decompose_anomalies(num,1) 
+| extend series_decompose_anomalies_num_ad_flag = series_multiply(10, series_decompose_anomalies_num_ad_flag)
+| project 
+    AverageValue = num, 
+    AnomalyFlags = series_decompose_anomalies_num_ad_flag, 
+    AnomalyDetectionScore = series_decompose_anomalies_num_ad_score,
+    AnomalyDetectionBaseLine = series_decompose_anomalies_num_baseline,
+    SourceTimestamp
+| render timechart 
+
+
+// Plot all Tags
+let _startTime = now()-1hr;
+let _endTime = now();
+let temptags = telemetry
+| distinct ExpandedNodeId
+| where ExpandedNodeId contains ("Line1")
+| project ExpandedNodeId;
+telemetry
+| where ExpandedNodeId in (temptags)
+| project 
+    SourceTimestamp, Tag = replace_string(ExpandedNodeId,"nsu=KEPServerEX;s=Simulator.Line1.",""), 
+    yaxis = todouble(Value)
+| make-series num=avg(yaxis) default=0 on SourceTimestamp in range(_startTime,_endTime, 1m) by Tag
+| render  timechart 

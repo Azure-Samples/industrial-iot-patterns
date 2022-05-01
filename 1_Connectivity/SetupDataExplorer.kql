@@ -1,0 +1,49 @@
+.create table opcua_raw(payload: dynamic)
+
+.create table opcua_raw ingestion json mapping "opcua_mapping" @'[{"column":"payload","path":"$","datatype":"dynamic"}]'
+
+.create table telemetry (DataSetWriterID: string, ExpandedNodeId: string, Value: dynamic, SourceTimestamp: datetime)
+
+.create-or-alter function ExpandOpcUaRaw() {
+        opcua_raw
+        |mv-expand records = payload.Messages
+        |project 
+            DataSetWriterID = tostring(records["DataSetWriterId"]),
+            Payload = todynamic(records["Payload"])
+        | mv-apply Payload on (
+            extend key = tostring(bag_keys(Payload)[0])
+            | extend p = Payload[key]
+            | project ExpandedNodeId = key, Value = todynamic(p.Value), SourceTimestamp = todatetime(p.SourceTimestamp)
+        )
+}
+
+.alter table telemetry policy update @'[{"Source": "opcua_raw", "Query": "ExpandOpcUaRaw()", "IsEnabled": "True"}]'
+
+
+//------------------------------------------------------------------------------------------
+// Handling multiple update polices for different data schemas across devices
+
+// example
+// {"messageId":1,"deviceId":"Raspberry Pi Web Client","temperature":"28.32278981756135","humidity":"67.9518300363803"}
+
+// opcua_raw
+// | where payload.messageId != ""
+// | project Payload = todynamic(payload), DeviceId = payload.deviceId
+// | mv-apply Payload on (
+//      extend key = tostring(bag_keys(Payload)[0])
+//      | extend p = Payload[key]
+//      | where key !in ('messageId','deviceId')
+//      | project DeviceId = DeviceId, SensorNodeId = key, Value = p, SourceTimestamp = now()
+// )
+
+// opcua_raw
+// | where payload.messageId == ""
+// |mv-expand records = payload.Messages
+// |project 
+//      DeviceId = tostring(records["DataSetWriterId"]),
+//      Payload = todynamic(records["Payload"])
+// | mv-apply Payload on (
+//      extend key = tostring(bag_keys(Payload)[0])
+//      | extend p = Payload[key]
+//      | project SensorNodeId = key, Value = todynamic(p.Value), SourceTimestamp = todatetime(p.SourceTimestamp)
+// )

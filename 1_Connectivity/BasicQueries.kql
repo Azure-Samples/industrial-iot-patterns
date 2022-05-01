@@ -1,0 +1,52 @@
+opc_raw
+| order by SourceTimestamp desc
+| take 100
+
+telemetry
+| order by SourceTimestamp desc
+| take 100
+
+// Plot all Sensors in all Lines
+// Last 1 hours with 1 minute grouping
+let _startTime = now()-1h;
+let _endTime = now();
+telemetry
+| make-series num=avg(tolong(Value)) default=0 on SourceTimestamp in range(_startTime, _endTime, 1m) by ExpandedNodeId
+| render timechart
+
+
+// Plot all Sensors in Line 1
+let _startTime = now()-1hr;
+let _endTime = now();
+let temptags = telemetry
+| distinct ExpandedNodeId
+| where ExpandedNodeId contains ("Line1")
+| project ExpandedNodeId;
+telemetry
+| where ExpandedNodeId in (temptags)
+| project 
+    SourceTimestamp, Tag = replace_string(ExpandedNodeId,"nsu=KEPServerEX;s=Simulator.Line1.",""), 
+    yaxis = todouble(Value)
+| make-series num=avg(yaxis) default=0 on SourceTimestamp in range(_startTime,_endTime, 1m) by Tag
+| render  timechart 
+
+
+
+// Plot all Humidity Sensors
+// Last 30 minutes with 10 second grouping
+let _startTime = now()-30m;
+let _endTime = now();
+let temptags = telemetry
+| distinct ExpandedNodeId
+| where ExpandedNodeId contains ("Humidity")
+| project ExpandedNodeId;
+telemetry
+| where ExpandedNodeId in (temptags)
+| project SourceTimestamp, ExpandedNodeId, yaxis = todouble(substring(Value,0,2))
+| make-series num=avg(yaxis) default=0 on SourceTimestamp in range(_startTime, _endTime, 10s) by ExpandedNodeId
+| render timechart  
+
+
+// Management Queries
+
+.show ingestion failures 

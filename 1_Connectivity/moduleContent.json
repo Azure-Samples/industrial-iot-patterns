@@ -1,0 +1,77 @@
+{
+    "content": {
+      "modulesContent": {
+        "$edgeAgent": {
+          "properties.desired": {
+            "schemaVersion": "1.1",
+            "runtime": {
+              "type": "docker",
+              "settings": {
+                "minDockerVersion": "v1.25",
+                "loggingOptions": "",
+                "registryCredentials": {}
+              }
+            },
+            "systemModules": {
+              "edgeAgent": {
+                "type": "docker",
+                "settings": {
+                  "image": "mcr.microsoft.com/azureiotedge-agent:1.1",  
+                  "createOptions": "{}"
+                },
+                "env": {
+                  "UpstreamProtocol": {
+                      "value": "AmqpWs"
+                  }
+              }
+              },
+              "edgeHub": {
+                "type": "docker",
+                "status": "running",
+                "restartPolicy": "always",
+                "settings": {
+                  "image": "mcr.microsoft.com/azureiotedge-hub:1.1",
+                  "createOptions": "{\"HostConfig\":{\"PortBindings\":{\"5671/tcp\":[{\"HostPort\":\"5671\"}],\"8883/tcp\":[{\"HostPort\":\"8883\"}],\"443/tcp\":[{\"HostPort\":\"443\"}]}}}"
+                },
+                "env": {
+                  "UpstreamProtocol": {
+                      "value": "AmqpWs"
+                  }
+              }
+              }
+            },
+            "modules": {
+              "OPCPublisher": {
+                "version": "1.0",
+                "type": "docker",
+                "status": "running",
+                "restartPolicy": "always",
+                "settings": {
+                  "image": "mcr.microsoft.com/iotedge/opc-publisher:2.8.0",
+                  "createOptions": "{\"Hostname\":\"publisher\",\"Cmd\":[\"PkiRootPath=/opcdata/pki\",\"--lf=/opcdata/publisher.log\",\"--pf=/opcdata/opcconfig.json\",\"--aa\",\"--di=60\",\"--me=Json\",\"--mm=PubSub\"],\"HostConfig\":{\"Binds\":[\"/home/iotedge-user/opcconfig:/opcdata\"]}}"
+                }
+              }
+            }
+          }
+        },
+        "$edgeHub": {
+          "properties.desired": {
+            "schemaVersion": "1.1",
+            "routes": {
+              "upstream": "FROM /messages/* INTO $upstream"
+            },
+            "storeAndForwardConfiguration": {
+              "timeToLiveSecs": 7200
+            }
+          }
+        },
+        "OPCPublisher": {
+          "properties.desired": {
+            "routes": {
+              "upstream": "FROM /messages/* INTO $upstream"
+            }
+          }
+        }
+      }
+    }
+  }
