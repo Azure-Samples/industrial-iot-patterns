@@ -1,0 +1,7 @@
+opcua_raw
+| where payload contains "BatchNumber"
+| project 
+BatchNumber = payload.BatchNumber,
+SourceTimestamp = unixtime_milliseconds_todatetime(todouble(payload.SourceTimestamp)),
+Sensor1 = payload.S1
+| order by SourceTimestamp desc
