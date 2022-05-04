@@ -1,0 +1,76 @@
+{
+    "modulesContent": {
+        "$edgeAgent": {
+            "properties.desired": {
+                "modules": {
+                    "OPCPublisher": {
+                        "settings": {
+                            "image": "mcr.microsoft.com/iotedge/opc-publisher:2.8.0",
+                            "createOptions": "{\"Hostname\":\"publisher\",\"Cmd\":[\"PkiRootPath=/opcdata/pki\",\"--lf=/opcdata/publisher.log\",\"--pf=/opcdata/opcconfig.json\",\"--aa\",\"--di=60\",\"--me=Json\",\"--mm=PubSub\"],\"HostConfig\":{\"Binds\":[\"/home/iotedge-user/opcconfig:/opcdata\"]}}"
+                        },
+                        "type": "docker",
+                        "version": "1.0",
+                        "status": "running",
+                        "restartPolicy": "always"
+                    },
+                    "SimulatedManufacturingSensors": {
+                        "settings": {
+                            "image": "ghcr.io/jomit/simulatedmanufacturingsensors:0.0.1-amd64",
+                            "createOptions": ""
+                        },
+                        "type": "docker",
+                        "status": "running",
+                        "restartPolicy": "always",
+                        "version": "1.0"
+                    }
+                },
+                "runtime": {
+                    "settings": {
+                        "minDockerVersion": "v1.25"
+                    },
+                    "type": "docker"
+                },
+                "schemaVersion": "1.1",
+                "systemModules": {
+                    "edgeAgent": {
+                        "settings": {
+                            "image": "mcr.microsoft.com/azureiotedge-agent:1.1",
+                            "createOptions": "{}"
+                        },
+                        "type": "docker",
+                        "env": {
+                            "UpstreamProtocol": {
+                                "value": "AmqpWs"
+                            }
+                        }
+                    },
+                    "edgeHub": {
+                        "settings": {
+                            "image": "mcr.microsoft.com/azureiotedge-hub:1.1",
+                            "createOptions": "{\"HostConfig\":{\"PortBindings\":{\"5671/tcp\":[{\"HostPort\":\"5671\"}],\"8883/tcp\":[{\"HostPort\":\"8883\"}],\"443/tcp\":[{\"HostPort\":\"443\"}]}}}"
+                        },
+                        "type": "docker",
+                        "env": {
+                            "UpstreamProtocol": {
+                                "value": "AmqpWs"
+                            }
+                        },
+                        "status": "running",
+                        "restartPolicy": "always"
+                    }
+                }
+            }
+        },
+        "$edgeHub": {
+            "properties.desired": {
+                "routes": {
+                    "upstream": "FROM /messages/* INTO $upstream"
+                },
+                "schemaVersion": "1.1",
+                "storeAndForwardConfiguration": {
+                    "timeToLiveSecs": 7200
+                }
+            }
+        }
+    }
+}
