@@ -208,3 +208,7 @@ For this sample we will build some queries to perform time series analysis and a
 
     <img src="../images/iothub-route-2.png"  height="60%" width="60%">
 
+- Validate data in Data Lake
+
+    <img src="../images/iothub-route-3.png"  height="75%" width="75%">
+

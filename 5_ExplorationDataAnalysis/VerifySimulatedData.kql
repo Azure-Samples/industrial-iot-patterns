@@ -3,5 +3,5 @@ opcua_raw
 | project 
 BatchNumber = payload.BatchNumber,
 SourceTimestamp = unixtime_milliseconds_todatetime(todouble(payload.SourceTimestamp)),
-Sensor1 = payload.S1
+Sensor1 = payload.S1, Sensor2 = payload.S2, Sensor3 = payload.S3, Sensor5 = payload.S5
 | order by SourceTimestamp desc
