@@ -14,7 +14,8 @@ Our scenario is around predicting failures (quality related) based on machine co
     - Contain production batch number 
 1. Production Quality Data
     - Contains production batch number
-    - Contains quality result `1=PASS and 0=FAIL` for each batch
+    - Contains quality error code for each batch
+    - `1 = Meets quality expecations | 0 = Does not meet quality expectation.`
 
 ## High Level Design
 
@@ -53,7 +54,7 @@ Our scenario is around predicting failures (quality related) based on machine co
 
 ## Upload production quality data
 
-- Open the data lake created earlier and upload the `batch-quality-data.csv` file to a folder named `qualitydata`
+- Open the data lake created earlier in Azure Portal and upload the `batch-quality-data.csv` file to a folder named `qualitydata`
 
   <img src="../images/ml-qualitydata.png"  height="60%" width="60%">
 
