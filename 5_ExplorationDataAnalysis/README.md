@@ -63,13 +63,19 @@ Our scenario is around predicting failures (quality related) based on machine co
 
 *[Machine Learning workspace](https://docs.microsoft.com/en-us/azure/machine-learning/concept-workspace) provides end to end data science lifecycle management services. It also provides a centralized place collaborate on artifacts around machine learning development and deployment.*
 
-- Create a new machine learning workspace and compute instance
+- Create a new machine learning workspace
 
     - `az ml workspace create -w iiotml -g iiotsample -l westus2`
 
+- Create a new compute instance for development. (Compute instances are typically per user so prefix with your name.)
+
     - `az ml computetarget create computeinstance --name jomitdev --vm-size STANDARD_DS3_V2 -w iiotml -g iiotsample`
 
-## Create Datasets
+- Go to the Notebooks section in Machine Learning Studio portal and upload the files from `notebooks` folder
+
+    <img src="../images/ml-notebookupload.png"  height="60%" width="60%">
+
+## Create Datastore
 
 - Open [Machine Learning Studio](https://ml.azure.com/) and select the workspace created above.
 
@@ -77,4 +83,17 @@ Our scenario is around predicting failures (quality related) based on machine co
 
     <img src="../images/ml-datastore.png"  height="60%" width="60%">
     
-- Upload and run below notebooks:
+
+## Create raw Dataset
+
+- Open and run [1_create_raw_dataset.ipynb](./notebooks/1_create_raw_dataset.ipynb) notebook
+
+
+## Create Dataset with initial features
+
+- Open and run [2_exploratory_analysis_feature_selection.ipynb](./notebooks/2_exploratory_analysis_feature_selection.ipynb) notebook
+
+
+## Test Baseline Model(s)
+
+- Open and run [3_baseline_modeling.ipynb](./notebooks/3_baseline_modeling.ipynb) notebook
