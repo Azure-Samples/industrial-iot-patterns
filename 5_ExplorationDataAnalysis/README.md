@@ -88,12 +88,22 @@ Our scenario is around predicting failures (quality related) based on machine co
 
 - Open and run [1_create_raw_dataset.ipynb](./notebooks/1_create_raw_dataset.ipynb) notebook
 
+    <img src="../images/ml-raw-dataset.png"  height="60%" width="60%">
 
 ## Create Dataset with initial features
 
 - Open and run [2_exploratory_analysis_feature_selection.ipynb](./notebooks/2_exploratory_analysis_feature_selection.ipynb) notebook
 
+    <img src="../images/ml-eda-1.png"  height="60%" width="60%">
+
+    <img src="../images/ml-eda-2.png"  height="60%" width="60%">
+
+    <img src="../images/ml-eda-3.png"  height="60%" width="60%">
+
+    <img src="../images/ml-eda-4.png"  height="60%" width="60%">
 
 ## Test Baseline Model(s)
 
 - Open and run [3_baseline_modeling.ipynb](./notebooks/3_baseline_modeling.ipynb) notebook
+
+    <img src="../images/ml-baseline-1.png"  height="60%" width="60%">
