@@ -90,6 +90,13 @@ Our scenario is around predicting failures (quality related) based on machine co
 
     <img src="../images/ml-raw-dataset.png"  height="60%" width="60%">
 
+## Perform basic Frequency Analysis
+
+- Open and run [2_frequency_analysis.ipynb](./notebooks/2_frequency_analysis.ipynb) notebook
+
+    <img src="../images/ml-eda-freq.png"  height="60%" width="60%">
+
+
 ## Create Dataset with initial features
 
 - Open and run [2_exploratory_analysis_feature_selection.ipynb](./notebooks/2_exploratory_analysis_feature_selection.ipynb) notebook
