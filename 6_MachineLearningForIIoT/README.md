@@ -27,9 +27,7 @@ In the previous step we used some of the [Exploratory Data Analysis](../5_Explor
 
 ## Building Model Training Pipeline
 
-- Open and run [01-build-retrain-pipeline.ipynb](./pipelines/01-build-retrain-pipeline.ipynb) notebook
-
-- Above notebook creates a machine learning pipeline that:
+- Open and run [01-build-retrain-pipeline.ipynb](./pipelines/01-build-retrain-pipeline.ipynb) notebook and create a machine learning pipeline that:
     1. Builds and registers train and test datasets.
     2. Builds and registers a new model based on 
     the features provided as a parameter.
@@ -42,8 +40,23 @@ In the previous step we used some of the [Exploratory Data Analysis](../5_Explor
     
 ## Building Model Prediction Pipeline
 
-- TODO
+- Create a folder in the DataLake named `predictionresults`, associated with the Datastore
 
+- Open and run [02-build-prediction-pipeline.ipynb](./pipelines/02-build-prediction-pipeline.ipynb) notebook and create prediction pipeline that:
+    1. Gets the registered model 
+    1. Gets the latest sensor data from data explorer
+    1. Runs the model and saves the prediction results to data lake
+
+    <img src="../images/ml-model-predict-1.png"  height="60%" width="60%">
+
+    <img src="../images/ml-model-predict-2.png"  height="60%" width="60%">
+
+    <img src="../images/ml-model-predict-3.png"  height="60%" width="60%">
+
+- Create Synaps Pipeline
+
+    - ...
+    
 ## Integrating Model Prediction with Synapse Pipelines
 
 - TODO
