@@ -4,8 +4,6 @@ Goal of these samples is to acceleratre deployment of [Industrial IoT Prediction
 
 
 
-1. [Exploratory Data Analysis (EDA)](../5_ExplorationDataAnalysis/README.md)
-
 1. [Operationalizing machine learning models with batch pipelines](./OperationalizeBatch.md)
 1. [Operationalizing machine learning models with near real-time api and dashboards](./OperationalizeNearRealTime.md)
 1. [Operationalizing machine learning models on the edge](./OperationalizeEdge.md)
