@@ -2,6 +2,10 @@
 
 Goal of these samples is to acceleratre deployment of [Industrial IoT Prediction Patterns](TODO). There is no one size fits all solution, as there are many [considerations](TODO), please review them before moving your workload to production.
 
+
+
+1. [Exploratory Data Analysis (EDA)](../5_ExplorationDataAnalysis/README.md)
+
 1. [Operationalizing machine learning models with batch pipelines](./OperationalizeBatch.md)
 1. [Operationalizing machine learning models with near real-time api and dashboards](./OperationalizeNearRealTime.md)
 1. [Operationalizing machine learning models on the edge](./OperationalizeEdge.md)
