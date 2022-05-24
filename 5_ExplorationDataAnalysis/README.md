@@ -90,26 +90,25 @@ Our scenario is around predicting failures (quality related) based on machine co
 
     <img src="../images/ml-raw-dataset.png"  height="60%" width="60%">
 
+## Perform Feature Engineering
+
+- Open and run [2_exploratory_analysis_feature_selection.ipynb](./notebooks/2_exploratory_analysis_feature_selection.ipynb) notebook
+
+    <img src="../images/ml-eda-1.png"  height="50%" width="50%">
+
+    <img src="../images/ml-eda-2.png"  height="50%" width="50%">
+
+    <img src="../images/ml-eda-3.png"  height="50%" width="50%">
+
+    <img src="../images/ml-eda-4.png"  height="50%" width="50%">
+
 ## Perform basic Frequency Analysis
 
 - Open and run [2_frequency_analysis.ipynb](./notebooks/2_frequency_analysis.ipynb) notebook
 
-    <img src="../images/ml-eda-freq.png"  height="60%" width="60%">
+    <img src="../images/ml-eda-freq.png"  height="50%" width="50%">
 
-
-## Create Dataset with initial features
-
-- Open and run [2_exploratory_analysis_feature_selection.ipynb](./notebooks/2_exploratory_analysis_feature_selection.ipynb) notebook
-
-    <img src="../images/ml-eda-1.png"  height="60%" width="60%">
-
-    <img src="../images/ml-eda-2.png"  height="60%" width="60%">
-
-    <img src="../images/ml-eda-3.png"  height="60%" width="60%">
-
-    <img src="../images/ml-eda-4.png"  height="60%" width="60%">
-
-## Test Baseline Model(s)
+## Build Baseline Model(s)
 
 - Open and run [3_baseline_modeling.ipynb](./notebooks/3_baseline_modeling.ipynb) notebook
 
