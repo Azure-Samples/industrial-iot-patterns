@@ -6,7 +6,7 @@ Exploratory Data Analysis (EDA) is the first step before we build any custom mod
 
 ## Scenario / Hypothesis
 
-Our scenario is around predicting failures (quality related) based on machine condition. The telemetry data contains a point in time snapshot of all the sensor values, how these values impact failures conditions is logged in a different system. For this sample we will use:
+Our scenario is around predicting failures (quality related) based on machine condition. The telemetry data contains a point in time snapshot of all the sensor values, how these values actually impacted quality failures conditions is logged in a different system. For this sample we will use:
 
 1. Simulated Sensor Data
     - Generated via an IoT Edge Module
@@ -15,7 +15,7 @@ Our scenario is around predicting failures (quality related) based on machine co
 1. Production Quality Data
     - Contains production batch number
     - Contains quality error code for each batch
-    - `1 = Meets quality expecations | 0 = Does not meet quality expectation.`
+    - 1 = Meets quality expectations  |  0 = Does not meet quality expectations.
 
 ## High Level Design
 
@@ -114,3 +114,27 @@ Our scenario is around predicting failures (quality related) based on machine co
 - Open and run [3_baseline_modeling.ipynb](./notebooks/3_baseline_modeling.ipynb) notebook
 
     <img src="../images/ml-baseline-1.png"  height="60%" width="60%">
+
+## Align Business and ML Objectives
+
+For any Machine Learning project to succeed, it’s crucial to tie Machine Learning metrics with the overall business performance. Here's an example of how you may approach this for quality prediction scenarios:
+
+1. Build a baseline of business metrics that you want improve using ML. For example:
+    - Number of quality failures
+    - Percentange of scrap
+    - Additional time spent on quality rework
+    - Cost of quality failures
+    - Cost of quality rework
+1. Select machine learning metrics for model performance based on use case / scenario. For example:
+    - "Precision" attempts to answer: What proportion of positive identifications were actually correct?
+    - "Recall" attempts to answer : What proportion of actual positives were identified correctly? 
+    - For scenarios where cost of wrong prediction is high, choose higher "precision"
+    - For scenarios where cost of missing any detection is high, choose higher "recall"
+1. Perform A/B testing and quantify business metric improvements and cost impact as shown in below example:
+        <table style="float:left">
+        <tr><td></td><td>Current</td><td>With ML (precision=50%, recall=90%)</td><td>Cost Impact</td></tr>
+        <tr><td>Number of quality failures per year</td><td>100</td><td>25</td><td>cost per quality failure - 75%</td></tr>
+        <tr><td>Percentage of scrap</td><td>15%</td><td>9%</td><td>cost of scrap - 6%</td></tr>
+        <tr><td>Additional time spent on quality rework</td><td>10%</td><td>2%</td><td>cost of rework - 8%</td></tr>
+        <tr><td>...</td><td>...</td><td>...</td><td>...</td></tr>
+        </table>
