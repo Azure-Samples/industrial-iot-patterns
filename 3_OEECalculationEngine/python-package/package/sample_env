@@ -1,0 +1,10 @@
+kusto_db_name=""
+kusto_aad_tenant_id=""
+kusto_cluster_url="https://<cluster.location>.kusto.windows.net/"
+kusto_app_id=""
+kusto_app_secret=""
+
+sql_server="<servername>.database.windows.net"
+sql_db_name=""
+sql_username=""
+sql_password=""

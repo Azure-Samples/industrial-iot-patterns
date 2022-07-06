@@ -1,0 +1,8 @@
+setup.py
+manufacturingmetrics/__init__.py
+manufacturingmetrics/oee.py
+manufacturingmetrics.egg-info/PKG-INFO
+manufacturingmetrics.egg-info/SOURCES.txt
+manufacturingmetrics.egg-info/dependency_links.txt
+manufacturingmetrics.egg-info/not-zip-safe
+manufacturingmetrics.egg-info/top_level.txt

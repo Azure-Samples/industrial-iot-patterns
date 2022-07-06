@@ -1,0 +1,2 @@
+pyodbc==4.0.30
+azure-kusto-data==2.1.1
