@@ -1,38 +1,38 @@
-ALTER TABLE [dbo].[OEE] DROP CONSTRAINT [DF__OEE__TimeStamp__7A672E12]
+ALTER TABLE [dbo].[OEE] DROP CONSTRAINT [DF__OEE__TimeStamp__114A936A]
 GO
-/****** Object:  Table [dbo].[Shifts]    Script Date: 7/5/2022 5:53:28 PM ******/
+/****** Object:  Table [dbo].[Shifts]    Script Date: 7/6/2022 12:33:39 PM ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Shifts]') AND type in (N'U'))
 DROP TABLE [dbo].[Shifts]
 GO
-/****** Object:  Table [dbo].[ShiftPlannedDownTime]    Script Date: 7/5/2022 5:53:28 PM ******/
+/****** Object:  Table [dbo].[ShiftPlannedDownTime]    Script Date: 7/6/2022 12:33:39 PM ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ShiftPlannedDownTime]') AND type in (N'U'))
 DROP TABLE [dbo].[ShiftPlannedDownTime]
 GO
-/****** Object:  Table [dbo].[Products]    Script Date: 7/5/2022 5:53:28 PM ******/
+/****** Object:  Table [dbo].[Products]    Script Date: 7/6/2022 12:33:39 PM ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Products]') AND type in (N'U'))
 DROP TABLE [dbo].[Products]
 GO
-/****** Object:  Table [dbo].[ProductQuality]    Script Date: 7/5/2022 5:53:28 PM ******/
+/****** Object:  Table [dbo].[ProductQuality]    Script Date: 7/6/2022 12:33:39 PM ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ProductQuality]') AND type in (N'U'))
 DROP TABLE [dbo].[ProductQuality]
 GO
-/****** Object:  Table [dbo].[OEE]    Script Date: 7/5/2022 5:53:28 PM ******/
+/****** Object:  Table [dbo].[OEE]    Script Date: 7/6/2022 12:33:39 PM ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[OEE]') AND type in (N'U'))
 DROP TABLE [dbo].[OEE]
 GO
-/****** Object:  Table [dbo].[Locations]    Script Date: 7/5/2022 5:53:28 PM ******/
+/****** Object:  Table [dbo].[Locations]    Script Date: 7/6/2022 12:33:39 PM ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Locations]') AND type in (N'U'))
 DROP TABLE [dbo].[Locations]
 GO
-/****** Object:  Table [dbo].[AssetTags]    Script Date: 7/5/2022 5:53:28 PM ******/
+/****** Object:  Table [dbo].[AssetTags]    Script Date: 7/6/2022 12:33:39 PM ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[AssetTags]') AND type in (N'U'))
 DROP TABLE [dbo].[AssetTags]
 GO
-/****** Object:  Table [dbo].[Assets]    Script Date: 7/5/2022 5:53:28 PM ******/
+/****** Object:  Table [dbo].[Assets]    Script Date: 7/6/2022 12:33:39 PM ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Assets]') AND type in (N'U'))
 DROP TABLE [dbo].[Assets]
 GO
-/****** Object:  Table [dbo].[Assets]    Script Date: 7/5/2022 5:53:28 PM ******/
+/****** Object:  Table [dbo].[Assets]    Script Date: 7/6/2022 12:33:39 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -43,7 +43,7 @@ CREATE TABLE [dbo].[Assets](
 	[AssetName] [nvarchar](100) NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[AssetTags]    Script Date: 7/5/2022 5:53:28 PM ******/
+/****** Object:  Table [dbo].[AssetTags]    Script Date: 7/6/2022 12:33:39 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -56,7 +56,7 @@ CREATE TABLE [dbo].[AssetTags](
 	[DowntimeTagValues] [nvarchar](100) NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Locations]    Script Date: 7/5/2022 5:53:28 PM ******/
+/****** Object:  Table [dbo].[Locations]    Script Date: 7/6/2022 12:33:39 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -68,7 +68,7 @@ CREATE TABLE [dbo].[Locations](
 	[UtcOffsetInHours] [int] NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[OEE]    Script Date: 7/5/2022 5:53:28 PM ******/
+/****** Object:  Table [dbo].[OEE]    Script Date: 7/6/2022 12:33:39 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -78,20 +78,27 @@ CREATE TABLE [dbo].[OEE](
 	[AssetId] [int] NOT NULL,
 	[ShiftId] [int] NOT NULL,
 	[ProductId] [int] NOT NULL,
+	[WorkOrder] [nvarchar](100) NOT NULL,
 	[TotalUnits] [float] NOT NULL,
 	[GoodUnits] [float] NOT NULL,
-	[BadUnits] [float] NOT NULL,
-	[PlannedProductionTime] [float] NOT NULL,
-	[DownTime] [float] NOT NULL,
-	[RunTime] [float] NOT NULL,
-	[Availability] [float] NOT NULL,
-	[Performance] [float] NOT NULL,
+	[ScrapedUnits] [float] NOT NULL,
 	[Quality] [float] NOT NULL,
+	[PlannedDownTimeInMinutes] [float] NOT NULL,
+	[DowntimeMinutes] [float] NOT NULL,
+	[UptimeMinutes] [float] NOT NULL,
+	[TotalProductionTimeInMinutes] [float] NOT NULL,
+	[PlannedProductionTimeInMinutes] [float] NOT NULL,
+	[Availability] [float] NOT NULL,
+	[CycleTimeInMinutes] [float] NOT NULL,
+	[Performance] [float] NOT NULL,
 	[OEE] [float] NOT NULL,
+	[AvailabilityLoss] [float] NOT NULL,
+	[QualityLoss] [float] NOT NULL,
+	[SpeedLoss] [float] NOT NULL,
 	[TimeStamp] [datetime2](7) NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ProductQuality]    Script Date: 7/5/2022 5:53:28 PM ******/
+/****** Object:  Table [dbo].[ProductQuality]    Script Date: 7/6/2022 12:33:39 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -107,7 +114,7 @@ CREATE TABLE [dbo].[ProductQuality](
 	[CreatedTimeStamp] [datetime] NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Products]    Script Date: 7/5/2022 5:53:28 PM ******/
+/****** Object:  Table [dbo].[Products]    Script Date: 7/6/2022 12:33:39 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -118,7 +125,7 @@ CREATE TABLE [dbo].[Products](
 	[IdealProductionUnitsPerMinute] [int] NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ShiftPlannedDownTime]    Script Date: 7/5/2022 5:53:28 PM ******/
+/****** Object:  Table [dbo].[ShiftPlannedDownTime]    Script Date: 7/6/2022 12:33:39 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -131,7 +138,7 @@ CREATE TABLE [dbo].[ShiftPlannedDownTime](
 	[CreatedTimeStamp] [datetime] NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Shifts]    Script Date: 7/5/2022 5:53:28 PM ******/
+/****** Object:  Table [dbo].[Shifts]    Script Date: 7/6/2022 12:33:39 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -156,13 +163,13 @@ INSERT [dbo].[Assets] ([Id], [PlantId], [AssetName]) VALUES (4, 2, N'Line4')
 GO
 SET IDENTITY_INSERT [dbo].[Assets] OFF
 GO
-INSERT [dbo].[AssetTags] ([AssetId], [NodeId], [StatusTagName], [UptimeTagValues], [DowntimeTagValues]) VALUES (1, N'opc.tcp://10.0.0.4:49320_b475f0d02c5268c4e3942a507df64b61abe193e9', N'nsu=KEPServerEX;s=Simulator.Line1.Status', N'1,2', N'3,4')
+INSERT [dbo].[AssetTags] ([AssetId], [NodeId], [StatusTagName], [UptimeTagValues], [DowntimeTagValues]) VALUES (1, N'opc.tcp://10.0.0.4:49320_b475f0d02c5268c4e3942a507df64b61abe193e9', N'nsu=KEPServerEX;s=Simulator.Line1.Status', N'1,2,3', N'4')
 GO
-INSERT [dbo].[AssetTags] ([AssetId], [NodeId], [StatusTagName], [UptimeTagValues], [DowntimeTagValues]) VALUES (2, N'opc.tcp://10.0.0.4:49320_b475f0d02c5268c4e3942a507df64b61abe193e9', N'nsu=KEPServerEX;s=Simulator.Line2.Status', N'1,2', N'3,4')
+INSERT [dbo].[AssetTags] ([AssetId], [NodeId], [StatusTagName], [UptimeTagValues], [DowntimeTagValues]) VALUES (2, N'opc.tcp://10.0.0.4:49320_b475f0d02c5268c4e3942a507df64b61abe193e9', N'nsu=KEPServerEX;s=Simulator.Line2.Status', N'1,2,3', N'4')
 GO
-INSERT [dbo].[AssetTags] ([AssetId], [NodeId], [StatusTagName], [UptimeTagValues], [DowntimeTagValues]) VALUES (3, N'opc.tcp://10.0.0.4:49320_b475f0d02c5268c4e3942a507df64b61abe193e9', N'nsu=KEPServerEX;s=Simulator.Line3.Status', N'1,2', N'3,4')
+INSERT [dbo].[AssetTags] ([AssetId], [NodeId], [StatusTagName], [UptimeTagValues], [DowntimeTagValues]) VALUES (3, N'opc.tcp://10.0.0.4:49320_b475f0d02c5268c4e3942a507df64b61abe193e9', N'nsu=KEPServerEX;s=Simulator.Line3.Status', N'1,2,3', N'4')
 GO
-INSERT [dbo].[AssetTags] ([AssetId], [NodeId], [StatusTagName], [UptimeTagValues], [DowntimeTagValues]) VALUES (4, N'opc.tcp://10.0.0.4:49320_b475f0d02c5268c4e3942a507df64b61abe193e9', N'nsu=KEPServerEX;s=Simulator.Line4.Status', N'1,2', N'3,4')
+INSERT [dbo].[AssetTags] ([AssetId], [NodeId], [StatusTagName], [UptimeTagValues], [DowntimeTagValues]) VALUES (4, N'opc.tcp://10.0.0.4:49320_b475f0d02c5268c4e3942a507df64b61abe193e9', N'nsu=KEPServerEX;s=Simulator.Line4.Status', N'1,2,3', N'4')
 GO
 SET IDENTITY_INSERT [dbo].[Locations] ON 
 GO
