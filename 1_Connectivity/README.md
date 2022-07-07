@@ -1,6 +1,6 @@
 # Connectivity with Industrial Assets using OPC UA and Edge for Linux on Windows (EFLOW)
 
-Goal of this sample is to acceleratre deployment of [Industrial IoT Connectivity Patterns](TODO). There is no one size fits all solution, as there are many [considerations](TODO), please review them before moving your workload to production.
+Goal of this sample is to acceleratre deployment of [Industrial IoT Connectivity Patterns](https://docs.microsoft.com/en-us/azure/architecture/guide/iiot-patterns/iiot-connectivity-patterns). There is no one size fits all solution, as there are many considerations, please review them before moving your workload to production.
 
 Using virtualization platform is common for managing Industrial PC's in a factory floor. In this sample we will use Azure as our virtualization platform and deploy our "edge" infrastructure. Although the process and scripts provided here have been tested with other platforms as well.
 

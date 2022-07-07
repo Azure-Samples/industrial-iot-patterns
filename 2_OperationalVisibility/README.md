@@ -1,6 +1,6 @@
 # Operational Visibility with Anomaly Detection and Root Cause Analysis
 
-Goal of this sample is to acceleratre deployment of [Industrial IoT Connectivity Patterns](TODO). There is no one size fits all solution, as there are many [considerations](TODO), please review them before moving your workload to production.
+Goal of this sample is to acceleratre deployment of [Industrial IoT Visibility Patterns](https://docs.microsoft.com/en-us/azure/architecture/guide/iiot-patterns/iiot-visibility-patterns). There is no one size fits all solution, as there are many considerations, please review them before moving your workload to production.
 
 Operational Visiblity enables manufacturers to gain insights & drive decision-making to improve quality and be more efficient and improve safety. There are many data sources including Historians, IIoT telemetry, Operational Systems like MES, ERP, etc. that are key for building a Visibility Control Tower. In this sample we will use the IIoT telemetry data gathered from our previous Connectivity Sample and try to understand trends via time series analysis, perform anomaly detection, root cause analysis and trigger alerts & actions based on anomalies.
 

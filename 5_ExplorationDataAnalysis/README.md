@@ -1,6 +1,6 @@
 # Exploratory Data Analysis for failure predictions using machine learning
 
-Goal of this sample is to acceleratre deployment of [Industrial IoT Prediction Patterns](TODO). There is no one size fits all solution, as there are many [considerations](TODO), please review them before moving your workload to production.
+Goal of this sample is to acceleratre deployment of [Industrial IoT Prediction Patterns](https://docs.microsoft.com/en-us/azure/architecture/guide/iiot-patterns/iiot-prediction-patterns). There is no one size fits all solution, as there are many considerations, please review them before moving your workload to production.
 
 Exploratory Data Analysis (EDA) is the first step before we build any custom models using machine learning. This is a critical and often complex step where in we normalize & clean the data, understand data distribution, outliers, correlations and assess the data for various hypothesis and experiments. 
 
