@@ -1,38 +1,38 @@
-ALTER TABLE [dbo].[OEE] DROP CONSTRAINT [DF__OEE__TimeStamp__114A936A]
+ALTER TABLE [dbo].[OEE] DROP CONSTRAINT [DF__OEE__CreatedTime__17036CC0]
 GO
-/****** Object:  Table [dbo].[Shifts]    Script Date: 7/6/2022 12:33:39 PM ******/
+/****** Object:  Table [dbo].[Shifts]    Script Date: 7/6/2022 5:39:31 PM ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Shifts]') AND type in (N'U'))
 DROP TABLE [dbo].[Shifts]
 GO
-/****** Object:  Table [dbo].[ShiftPlannedDownTime]    Script Date: 7/6/2022 12:33:39 PM ******/
+/****** Object:  Table [dbo].[ShiftPlannedDownTime]    Script Date: 7/6/2022 5:39:31 PM ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ShiftPlannedDownTime]') AND type in (N'U'))
 DROP TABLE [dbo].[ShiftPlannedDownTime]
 GO
-/****** Object:  Table [dbo].[Products]    Script Date: 7/6/2022 12:33:39 PM ******/
+/****** Object:  Table [dbo].[Products]    Script Date: 7/6/2022 5:39:31 PM ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Products]') AND type in (N'U'))
 DROP TABLE [dbo].[Products]
 GO
-/****** Object:  Table [dbo].[ProductQuality]    Script Date: 7/6/2022 12:33:39 PM ******/
+/****** Object:  Table [dbo].[ProductQuality]    Script Date: 7/6/2022 5:39:31 PM ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ProductQuality]') AND type in (N'U'))
 DROP TABLE [dbo].[ProductQuality]
 GO
-/****** Object:  Table [dbo].[OEE]    Script Date: 7/6/2022 12:33:39 PM ******/
+/****** Object:  Table [dbo].[OEE]    Script Date: 7/6/2022 5:39:31 PM ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[OEE]') AND type in (N'U'))
 DROP TABLE [dbo].[OEE]
 GO
-/****** Object:  Table [dbo].[Locations]    Script Date: 7/6/2022 12:33:39 PM ******/
+/****** Object:  Table [dbo].[Locations]    Script Date: 7/6/2022 5:39:31 PM ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Locations]') AND type in (N'U'))
 DROP TABLE [dbo].[Locations]
 GO
-/****** Object:  Table [dbo].[AssetTags]    Script Date: 7/6/2022 12:33:39 PM ******/
+/****** Object:  Table [dbo].[AssetTags]    Script Date: 7/6/2022 5:39:31 PM ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[AssetTags]') AND type in (N'U'))
 DROP TABLE [dbo].[AssetTags]
 GO
-/****** Object:  Table [dbo].[Assets]    Script Date: 7/6/2022 12:33:39 PM ******/
+/****** Object:  Table [dbo].[Assets]    Script Date: 7/6/2022 5:39:31 PM ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Assets]') AND type in (N'U'))
 DROP TABLE [dbo].[Assets]
 GO
-/****** Object:  Table [dbo].[Assets]    Script Date: 7/6/2022 12:33:39 PM ******/
+/****** Object:  Table [dbo].[Assets]    Script Date: 7/6/2022 5:39:31 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -43,7 +43,7 @@ CREATE TABLE [dbo].[Assets](
 	[AssetName] [nvarchar](100) NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[AssetTags]    Script Date: 7/6/2022 12:33:39 PM ******/
+/****** Object:  Table [dbo].[AssetTags]    Script Date: 7/6/2022 5:39:31 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -56,7 +56,7 @@ CREATE TABLE [dbo].[AssetTags](
 	[DowntimeTagValues] [nvarchar](100) NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Locations]    Script Date: 7/6/2022 12:33:39 PM ******/
+/****** Object:  Table [dbo].[Locations]    Script Date: 7/6/2022 5:39:31 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -68,7 +68,7 @@ CREATE TABLE [dbo].[Locations](
 	[UtcOffsetInHours] [int] NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[OEE]    Script Date: 7/6/2022 12:33:39 PM ******/
+/****** Object:  Table [dbo].[OEE]    Script Date: 7/6/2022 5:39:31 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -95,10 +95,11 @@ CREATE TABLE [dbo].[OEE](
 	[AvailabilityLoss] [float] NOT NULL,
 	[QualityLoss] [float] NOT NULL,
 	[SpeedLoss] [float] NOT NULL,
-	[TimeStamp] [datetime2](7) NOT NULL
+	[OEEDate] [date] NOT NULL,
+	[CreatedTimeStamp] [datetime2](7) NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ProductQuality]    Script Date: 7/6/2022 12:33:39 PM ******/
+/****** Object:  Table [dbo].[ProductQuality]    Script Date: 7/6/2022 5:39:31 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -114,7 +115,7 @@ CREATE TABLE [dbo].[ProductQuality](
 	[CreatedTimeStamp] [datetime] NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Products]    Script Date: 7/6/2022 12:33:39 PM ******/
+/****** Object:  Table [dbo].[Products]    Script Date: 7/6/2022 5:39:31 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -125,7 +126,7 @@ CREATE TABLE [dbo].[Products](
 	[IdealProductionUnitsPerMinute] [int] NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ShiftPlannedDownTime]    Script Date: 7/6/2022 12:33:39 PM ******/
+/****** Object:  Table [dbo].[ShiftPlannedDownTime]    Script Date: 7/6/2022 5:39:31 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -138,7 +139,7 @@ CREATE TABLE [dbo].[ShiftPlannedDownTime](
 	[CreatedTimeStamp] [datetime] NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Shifts]    Script Date: 7/6/2022 12:33:39 PM ******/
+/****** Object:  Table [dbo].[Shifts]    Script Date: 7/6/2022 5:39:31 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -229,5 +230,5 @@ INSERT [dbo].[Shifts] ([Id], [PlantId], [ShiftName], [ShiftStartTime], [ShiftEnd
 GO
 SET IDENTITY_INSERT [dbo].[Shifts] OFF
 GO
-ALTER TABLE [dbo].[OEE] ADD  DEFAULT (getdate()) FOR [TimeStamp]
+ALTER TABLE [dbo].[OEE] ADD  DEFAULT (getdate()) FOR [CreatedTimeStamp]
 GO

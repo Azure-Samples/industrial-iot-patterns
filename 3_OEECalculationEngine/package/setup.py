@@ -8,7 +8,7 @@ setuptools.setup(
     version="0.1.0",
     author="Jomit Vaghela",
     author_email="",
-    description="Package to calculate manufacturing metrics and KPIs like OEE",
+    description="Package to calculate manufacturing performance metrics and KPIs like OEE",
     long_description=long_description,
     long_description_content_type="text/markdown",
     packages=setuptools.find_packages(),

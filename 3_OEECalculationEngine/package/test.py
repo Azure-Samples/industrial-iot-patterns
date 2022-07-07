@@ -23,9 +23,10 @@ appSecret = os.getenv("kusto_app_secret")
 kustodb = os.getenv("kusto_db_name")
 kustoConnectionString = KustoConnectionStringBuilder.with_aad_application_key_authentication(cluster,appId,appSecret,aadTenantId)
 
+oeeDate = "2022-07-04"
 oee = OEE()
-oeedf = oee.calculateOEE ("2022-07-04",sqlConnectionString, kustodb, kustoConnectionString)
-oee.saveOEE(oeedf, sqlConnectionString)
+oeedf = oee.calculateOEE (oeeDate,sqlConnectionString, kustodb, kustoConnectionString)
+oee.saveOEE(oeeDate, oeedf, sqlConnectionString)
 oeedf.to_csv("oeedf.csv")
 print(oeedf.head())
 

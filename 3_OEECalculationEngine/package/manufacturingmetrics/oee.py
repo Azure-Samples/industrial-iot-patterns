@@ -114,10 +114,9 @@ class OEE():
         oeedf['AvailabilityLoss'] = ((oeedf['DowntimeMinutes'] / oeedf['CycleTimeInMinutes']) / ( oeedf['PlannedProductionTimeInMinutes'] / oeedf['CycleTimeInMinutes'])) * 100
         oeedf['QualityLoss'] = (oeedf['QuantityScraped'] / ( oeedf['PlannedProductionTimeInMinutes'] / oeedf['CycleTimeInMinutes'])) * 100
         oeedf['SpeedLoss'] = 100 - oeedf['AvailabilityLoss'] -  oeedf['QualityLoss'] - oeedf['OEE']
-
         return oeedf
 
-    def saveOEE(self, oeedf, sqlConnectionString):
+    def saveOEE(self, oeeDate, oeedf, sqlConnectionString):
         with pyodbc.connect(sqlConnectionString) as conn:
             with conn.cursor() as cursor:
                 for index, row in oeedf.iterrows():
@@ -128,14 +127,14 @@ class OEE():
                         ,[PlannedDownTimeInMinutes],[DowntimeMinutes],[UptimeMinutes]
                         ,[TotalProductionTimeInMinutes],[PlannedProductionTimeInMinutes]
                         ,[Availability],[CycleTimeInMinutes],[Performance],[OEE]
-                        ,[AvailabilityLoss],[QualityLoss],[SpeedLoss])
+                        ,[AvailabilityLoss],[QualityLoss],[SpeedLoss],[OEEDate])
                     VALUES
                         ({row.PlantId},{row.AssetId},{row.ShiftId},{row.ProductId},'{row.WorkOrder}'
                         ,{row.QuantityIn},{row.QuantityOut},{row.QuantityScraped},{row.Quality}
                         ,{row.PlannedDownTimeInMinutes},{row.DowntimeMinutes},{row.UptimeMinutes}
                         ,{row.TotalProductionTimeInMinutes},{row.PlannedProductionTimeInMinutes}
                         ,{row.Availability},{row.CycleTimeInMinutes},{row.Performance},{row.OEE}
-                        ,{row.AvailabilityLoss},{row.QualityLoss},{row.SpeedLoss})
+                        ,{row.AvailabilityLoss},{row.QualityLoss},{row.SpeedLoss},'{oeeDate}')
                     """ 
                     #print(insertQuery)   
                     cursor.execute(insertQuery)
