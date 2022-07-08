@@ -1,5 +1,3 @@
-:warning: In progress
-
 # Overall Equipment Effectiveness(OEE) and KPI Calculation Engine
 
 Goal of this sample is to acceleratre deployment of [Industrial IoT Transparency Patterns](https://docs.microsoft.com/en-us/azure/architecture/guide/iiot-patterns/iiot-transparency-patterns). There is no one size fits all solution, as there are many considerations, please review them before moving your workload to production.
