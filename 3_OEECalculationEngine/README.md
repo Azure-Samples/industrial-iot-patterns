@@ -12,13 +12,13 @@ Goal of this sample is to acceleratre deployment of [Industrial IoT Transparency
 
 - You have [Operational Visibility](../2_OperationalVisibility/README.md) sample working.
 
-## Setup Sample MES Database
+## Setup SQL Database
 
 - Create a [Single SQL Database](https://docs.microsoft.com/en-us/azure/azure-sql/database/single-database-create-quickstart?view=azuresql&tabs=azure-portal)
 
     - Open `Networking` tab and make sure `Allow Azure services and resources to access this server`  is (checked)
 
-- Run the [sqldb/mes.sql](sqldb/mes.sql) script to create the tables and sample data
+- Run the [sqldb/mes-reporting.sql](sqldb/mes-reporting.sql) script to create the MES and OEE Reporting tables, along with some sample data
 
 ## Setup Synapse Workspace
 
@@ -57,11 +57,16 @@ Goal of this sample is to acceleratre deployment of [Industrial IoT Transparency
 
 ## Visualize OEE in Power BI
 
-- *In Progress...*
+- Open [powerbi/oee.pbix](powerbi/oee.pbix) file and change the `Data Source settings` to connect with the SQL Database created above.
+
+    <img src="../images/oee-pbi-1.png"  height="70%" width="70%">
+
+    <img src="../images/oee-pbi-2.png"  height="70%" width="70%">
+
 
 ## Additional Resources 
 
-- Build package
+- Update and ReBuild package
     - `cd package`
     - `pip install wheel setuptools`
     - `python setup.py bdist_wheel`
