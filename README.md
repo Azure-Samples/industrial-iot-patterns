@@ -12,7 +12,7 @@ Each stage of an IIoT Solution consists of multiple design patterns. Please revi
 
 1. [Connectivity with Industrial Assets using OPC UA and Edge for Linux on Windows (EFLOW)](./1_Connectivity/README.md)
 1. [Operational Visibility with Anomaly Detection and Root Cause Analysis](./2_OperationalVisibility/README.md)
-1. Overall Equipment Effectiveness(OEE) and KPI Calculation Engine (*In Progress*)
+1. [Overall Equipment Effectiveness(OEE) and KPI Calculation Engine](./3_OEECalculationEngine/README.md)
 1. Factory and Supply Chain Digital Twin (*In Progress*)
 1. [Exploratory Data Analysis for failure predictions](./5_ExplorationDataAnalysis/README.md)
 1. [Operationalizing machine learning based prediction models](./6_MachineLearningForIIoT/README.md)

@@ -5,5 +5,5 @@ Goal of these samples is to acceleratre deployment of [Industrial IoT Prediction
 
 
 1. [Operationalizing machine learning models with batch pipelines](./OperationalizeBatch.md)
-1. [Operationalizing machine learning models with near real-time api and dashboards](./OperationalizeNearRealTime.md)
-1. [Operationalizing machine learning models on the edge](./OperationalizeEdge.md)
+1. Operationalizing machine learning models with near real-time api and dashboards (*In Progress*)
+1. Operationalizing machine learning models on the edge (*In Progress*)
