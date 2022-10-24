@@ -179,7 +179,7 @@ Since EFLOW uses nested virtualization make sure to use the appropriate size as 
 
 **Explore the Data**
 
-- Wait for few minutes and run the queires from [TimeSeriesQueries.kql](./TimeSeriesQueries.kql) file
+- Wait for few minutes and run the queires from [BasicQueries.kql](./BasicQueries.kql) file
 
     <img src="../images/adx-query1.png"  height="70%" width="70%">
 
