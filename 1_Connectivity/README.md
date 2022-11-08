@@ -28,7 +28,7 @@ Using virtualization platform is common for managing Industrial PC's in a factor
 
 - `az login`
 
-- `az group create --name iiotsample --location westus`
+- `az group create --name iiotsample --location westus2`
 
 - `az vm create --resource-group iiotsample --name kepwarevm  --image Win2019Datacenter --public-ip-sku Standard --admin-username azureuser`
 
