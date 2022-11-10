@@ -150,7 +150,10 @@ Since EFLOW uses nested virtualization make sure to use the appropriate size as 
 
 *The key next step after connetivity is to store the device telemetry data long term, so we can can perform analyatics on it including time series analysis, forecasting, machine learning modeling, etc., to make better business decisions and get value from our data. For this sample we will use Azure Data Explorer as our long term data store for doing time series analysis as well as build near real-time dashboards.*
 
+**Add Kusto extension to Azure CLI**
 
+- `az extension add -n kusto`
+ 
 **Create Data Explorer Cluster**
 
 *For this sample we will create a 2 node cluster with Standard_E2a_v4 size, which is optimized for heavy compute to handle high throughput stream ingestion, and time series analysis on millions of telemetry messages. See [pricing details](https://azure.microsoft.com/en-us/pricing/details/data-explorer/) to estimate montly costs with other sku's.*
@@ -166,16 +169,18 @@ Since EFLOW uses nested virtualization make sure to use the appropriate size as 
 
 **Create Tables**
 
-- Open [Data Explorer Web UI](https://docs.microsoft.com/en-us/azure/data-explorer/web-query-data) and run the queries in [SetupDataExplorer.kql](./SetupDataExplorer.kql)
+- Go to the Data Exlorer Database on the Azure Portal and open the Web UI
+- Run the queries in [SetupDataExplorer.kql](./SetupDataExplorer.kql)
 
 **Create IoT Hub Connection**
 
 - `az iot hub consumer-group create --hub-name iiotmfghub --name adx-mfgdb --resource-group iiotsample`
 
 - Add new [data connection for IoT Hub](https://docs.microsoft.com/en-us/azure/data-explorer/ingest-data-iot-hub#connect-azure-data-explorer-table-to-iot-hub)
-
-    <img src="../images/adx-iothub-connection.png"  height="50%" width="50%">
-
+	- get the iot hub resouce id `az iot hub show --name iiotmfghub` and use it for the next command; the id is in the form of 
+	
+		`/subscriptions/<your subscription id>/resourceGroups/iiotsample/providers/Microsoft.Devices/IotHubs/iiotmfghub`
+	- `az kusto data-connection iot-hub create --cluster-name iiotmfgdev --data-connection-name iiotmfghub-connection --database-name mfgdb --resource-group iiotsample --consumer-group adx-mfgdb --shared-access-policy-name iothubowner --data-format MULTIJSON --iot-hub-resource-id /subscriptions/<sub Id>/resourceGroups/iiotsample/providers/Microsoft.Devices/IotHubs/iiotsamplehub --table-name opcua_raw --mapping-rule-name opcua_mapping`
 
 **Explore the Data**
 
