@@ -1,7 +1,3 @@
-opc_raw
-| order by SourceTimestamp desc
-| take 100
-
 telemetry
 | order by SourceTimestamp desc
 | take 100
