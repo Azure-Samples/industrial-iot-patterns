@@ -10,7 +10,7 @@ Operational Visiblity enables manufacturers to gain insights & drive decision-ma
 
 ## Pre-requisites
 
-- You have [Connectivity Deployment Sample](https://github.com/iotrockstars/iot-iiot/blob/main/1-Connectivity/README.md) working, or have your IIoT data in Data Explorer already.
+- You have [Connectivity Deployment Sample](https://github.com/Azure-Samples/industrial-iot-patterns/tree/main/1_Connectivity/README.md) working, or have your IIoT data in Data Explorer already.
 
 - Add new `Status` tag in Kepware which changes every 15 min. Use the [LineSimulationDemo-2.json](./LineSimulationDemo-2.json) file to update the configuration.
 
