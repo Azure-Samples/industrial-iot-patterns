@@ -1,0 +1,13 @@
+{
+  "name": "AzureSqlDbLinkedService",
+  "properties": {
+      "type": "AzureSqlDatabase",
+      "typeProperties": {
+          "connectionString": "Data Source=iiotsamplesqlserver.database.windows.net;Initial Catalog=iiotsamplesqldb;User ID=azureuser;Password=<password>;Trusted_Connection=False;Encrypt=True;Connection Timeout=30"
+      },
+      "connectVia": {
+          "referenceName": "AutoResolveIntegrationRuntime",
+          "type": "IntegrationRuntimeReference"
+      }
+  }
+}
