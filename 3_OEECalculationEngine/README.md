@@ -12,28 +12,41 @@ Goal of this sample is to acceleratre deployment of [Industrial IoT Transparency
 
 ## Setup SQL Database
 
-- Create a [Single SQL Database](https://docs.microsoft.com/en-us/azure/azure-sql/database/single-database-create-quickstart?view=azuresql&tabs=azure-portal)
-
-    - Open `Networking` tab and make sure `Allow Azure services and resources to access this server`  is (checked)
+- Create a [Single SQL Database](https://learn.microsoft.com/en-us/azure/azure-sql/database/single-database-create-quickstart?view=azuresql&tabs=azure-cli) using the following az cli commands:  
+    1. Create a SQL server:  
+         `az sql server create --name iiotsamplesqlserver  --resource-group iiotsample  --location "West US 2" --admin-user azureuser --admin-password <your password>`  
+    1. Configure the firewall  
+            `az sql server firewall-rule create --resource-group iiosample --server iiotsamplesqlserver -n AllowYourIp --start-ip-address 0.0.0.0 --end-ip-address 0.0.0.0`  
+    1. Create the database  
+            `az sql db create --resource-group iiotsample --server iiotsamplesqlserver --name iiotsamplesqldb --sample-name AdventureWorksLT --edition GeneralPurpose  --compute-model Serverless --family Gen5 --capacity 2`
 
 - Run the [sqldb/mes-reporting.sql](sqldb/mes-reporting.sql) script to create the MES and OEE Reporting tables, along with some sample data
 
 ## Setup Synapse Workspace
 
-- Create a [Synapse Workspace](https://docs.microsoft.com/en-us/azure/synapse-analytics/quickstart-create-workspace) with default settings. 
+- Create a [Synapse Workspace](https://docs.microsoft.com/en-us/azure/synapse-analytics/quickstart-create-workspace) with default settings:  
+    1. Create a Data Lake Storage account  
+        `az storage account create --name iiotsamplestaccount --resource-group iiotsample --location westus2 --sku Standard_RAGRS --kind StorageV2`  
+    1. Create a container  
+        `az storage container create --name iiotsamplefs --account-name iiotsamplestaccount --auth-mode login`
+    1. Create the Synapse workspace  
+        `az synapse workspace create --name iiotsamplesynapsews --resource-group iiotsample --storage-account iiotsamplestaccount --file-system iiotsamplefs --sql-admin-login-user sqladminuser --sql-admin-login-password <ypur password> --location westus2`
 
-- Create 2 [Linked Services](https://docs.microsoft.com/en-us/azure/data-factory/concepts-linked-services?tabs=data-factory) in Synapse Workspace connected to:
+- Create 2 [Linked Services](https://docs.microsoft.com/en-us/azure/data-factory/concepts-linked-services?tabs=data-factory) in Synapse Workspace:
 
-    1. [SQL Database](https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-sql-database?tabs=data-factory#create-an-azure-sql-database-linked-service-using-ui) created above
-    1. [Azure Data Explorer](https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-data-explorer?tabs=data-factory#create-a-linked-service-to-azure-data-explorer-using-ui) created in the prerequisites.
+    1. Download [synapse/sqlLinkedService.json](./synapse/sqlLinkedService.json) and add your SQL password
+    1. Download [synapse/adxLinkedService.json](./synapse/adxLinkedService.json) and add tenantId, servicePrincipalId and servicePrincipalKey related to the Azure Data Explorer created in the prerequisites
+    1. Link the [SQL Database](https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-sql-database?tabs=data-factory#create-an-azure-sql-database-linked-service-using-ui) created above:  
+    `az synapse linked-service create --workspace-name iiotsamplesynapse --name sqllinkedservice --file @"./sqlLinkedService.json"`
+    1. Link [Azure Data Explorer](https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-data-explorer?tabs=data-factory#create-a-linked-service-to-azure-data-explorer-using-ui) created in the prerequisites:  
+    `az synapse linked-service create --workspace-name iiotsamplessynapse --name adxlinkedservice --file @"./adxLinkedService.json"`
 
 - Upload new Workspace package [package/dist/manufacturingmetrics-0.1.0-py3-none-any.whl](package/dist/manufacturingmetrics-0.1.0-py3-none-any.whl)  
 
     <img src="../images/sparkpool-2.png"  height="60%" width="60%">
 
-- Create a new Apache Spark Pool
-
-    <img src="../images/sparkpool-1.png"  height="60%" width="60%">
+- Create a new [Apache Spark Pool](https://learn.microsoft.com/en-us/cli/azure/synapse/spark/pool?view=azure-cli-latest#az-synapse-spark-pool-update):  
+    `az synapse spark pool create --name devtestspark --workspace-name iiotsamplesynapse  --resource-group iiotsample --spark-version 2.4 --node-count 3 --node-size Small`
 
 - Upload the [package/requirements.txt](package/requirements.txt) file, select the workspace package created above and click `Apply`. Wait until the packages are deployed.
 

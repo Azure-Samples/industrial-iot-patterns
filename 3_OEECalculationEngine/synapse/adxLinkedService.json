@@ -1,0 +1,16 @@
+{
+    "name": "AzureDataExplorerLinkedService",
+    "properties": {
+        "type": "AzureDataExplorer",
+        "typeProperties": {
+            "endpoint": "https://iiotmfgdev.westus2.kusto.windows.net",
+            "database": "mfgdb",
+            "tenant": "<tenant id>",
+            "servicePrincipalId": "<servicePrincipalId>",
+            "servicePrincipalKey": {
+                "type": "SecureString",
+                "value": "<servicePrincipalKey>"
+            }
+        }
+    }
+}
