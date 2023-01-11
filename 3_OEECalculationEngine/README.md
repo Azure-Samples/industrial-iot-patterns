@@ -32,11 +32,13 @@ Goal of this sample is to acceleratre deployment of [Industrial IoT Transparency
     1. Create the Synapse workspace  
         `az synapse workspace create --name iiotsamplesynapsews --resource-group iiotsample --storage-account iiotsamplestaccount --file-system iiotsamplefs --sql-admin-login-user sqladminuser --sql-admin-login-password <ypur password> --location westus2`
 
-- Create 2 [Linked Services](https://docs.microsoft.com/en-us/azure/data-factory/concepts-linked-services?tabs=data-factory) in Synapse Workspace connected to:
+- Create 2 [Linked Services](https://docs.microsoft.com/en-us/azure/data-factory/concepts-linked-services?tabs=data-factory) in Synapse Workspace:
 
-    1. [SQL Database](https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-sql-database?tabs=data-factory#create-an-azure-sql-database-linked-service-using-ui) created above:  
+    1. Download [synapse/sqlLinkedService.json](./synapse/sqlLinkedService.json) and add your SQL password
+    1. Download [synapse/adxLinkedService.json](./synapse/adxLinkedService.json) and add tenantId, servicePrincipalId and servicePrincipalKey related to the Azure Data Explorer created in the prerequisites
+    1. Link the [SQL Database](https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-sql-database?tabs=data-factory#create-an-azure-sql-database-linked-service-using-ui) created above:  
     `az synapse linked-service create --workspace-name iiotsamplesynapse --name sqllinkedservice --file @"./sqlLinkedService.json"`
-    1. [Azure Data Explorer](https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-data-explorer?tabs=data-factory#create-a-linked-service-to-azure-data-explorer-using-ui) created in the prerequisites:  
+    1. Link [Azure Data Explorer](https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-data-explorer?tabs=data-factory#create-a-linked-service-to-azure-data-explorer-using-ui) created in the prerequisites:  
     `az synapse linked-service create --workspace-name iiotsamplessynapse --name adxlinkedservice --file @"./adxLinkedService.json"`
 
 - Upload new Workspace package [package/dist/manufacturingmetrics-0.1.0-py3-none-any.whl](package/dist/manufacturingmetrics-0.1.0-py3-none-any.whl)  
