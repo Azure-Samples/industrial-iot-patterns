@@ -14,7 +14,7 @@ Goal of this sample is to acceleratre deployment of [Industrial IoT Transparency
 
 - Create a [Single SQL Database](https://learn.microsoft.com/en-us/azure/azure-sql/database/single-database-create-quickstart?view=azuresql&tabs=azure-cli) using the following az cli commands:  
     1. Create a SQL server:  
-         `az sql server create --name iiotsamplesqlserver  --resource-group iiotsample  --location "West US 2" --admin-user azureuser --admin-password <password>`  
+         `az sql server create --name iiotsamplesqlserver  --resource-group iiotsample  --location "West US 2" --admin-user azureuser --admin-password <your password>`  
     1. Configure the firewall  
             `az sql server firewall-rule create --resource-group iiosample --server iiotsamplesqlserver -n AllowYourIp --start-ip-address 0.0.0.0 --end-ip-address 0.0.0.0`  
     1. Create the database  
